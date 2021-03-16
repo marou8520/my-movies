@@ -1,0 +1,14 @@
+.header {
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.theme-button-container {
+    position: absolute;
+    right: 0;
+}
