@@ -11,4 +11,23 @@
 .theme-button-container {
     position: absolute;
     right: 0;
+    align-items: center;
+    display: flex;
+    margin-right: 10px;
+}
+
+.material-icons.md-18 {
+    font-size: 18px;
+}
+
+.react-switch {
+    margin: 0px 3px;
+}
+
+.dark-header {
+background-color: #1F2937;
+}
+
+.light-header {
+  background-color: #60A5FA;
 }
