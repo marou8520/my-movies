@@ -1,4 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+    fetchMovies, selectMovies, selectstatus
+  } from '../redux/moviesSlice';
 import '../styles/MoviesList.css';
 
 interface MovieNode {
@@ -10,14 +14,16 @@ interface MovieNode {
 
 const serverUri = "http://image.tmdb.org/t/p/original//";
 const MoviesList: React.FC = () => {
-const [movies, setMovies] = useState<MovieNode[]>([]);
+const dispatch = useDispatch();
+const movies = useSelector(selectMovies);
+const postStatus = useSelector(selectstatus)
 
-useEffect(() => {
-    fetch("https://api.themoviedb.org/3/movie/popular?api_key=b733f9f3727f7a148f45111ceb4cff9a&language=en-US&page=1")
-    .then(response => response.json())
-        .then(data => setMovies(data.results));
-  }, [])
-
+  useEffect(() => {
+    if (postStatus === 'idle') {
+      dispatch(fetchMovies())
+    }
+  }, [postStatus, dispatch])
+ 
     return <div className="movies-card-list">
         {movies.length > 0 && movies.map((movie: MovieNode) => {
             return <div key={movie.id} className="movie-card">
