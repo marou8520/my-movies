@@ -1,12 +1,29 @@
-import React from 'react';
-import '../styles/App.css';
-import Home from './Home';
+import React from "react";
+import "../styles/App.css";
+import Home from "./Home";
+import MovieDetail from "./MovieDetail";
+import { selectTheme } from "../redux/themeSlice";
+import { useSelector } from "react-redux";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
+  const lightTheme = useSelector(selectTheme);
+
   return (
-    <div className="App">
-      <Home />
-    </div>
+    <Router>
+      <div
+        className={`app ${lightTheme ? "light-background" : "dark-background"}`}
+      >
+        <Switch>
+          <Route path="/movieDetail">
+            <MovieDetail />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 

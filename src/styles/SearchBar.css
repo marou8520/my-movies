@@ -1,12 +1,16 @@
 .search-input {
   width: 100%;
-  border: 1px solid #909090;
-  border-radius: 3px;
-  padding: 5px;
-  font-family: 'Roboto';
+  border: 0px;
+  font-family: "Roboto";
+  outline: 0;
 }
 
 .search-input-container {
+  background-color: white;
+  border: 1px solid #909090;
+  border-radius: 3px;
   display: flex;
+  margin: 5px;
   padding: 5px;
+  align-items: center;
 }
