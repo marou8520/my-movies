@@ -5,3 +5,8 @@
 .light-background {
   background-color: #ffff;
 }
+
+.app {
+  font-family: "Roboto";
+  overflow: auto;
+}
