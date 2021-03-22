@@ -19,12 +19,12 @@
 }
 
 .movie-score {
-  margin: 20px;
+  margin: 20px 0px;
 }
 
 @media screen and (max-width: 480px) {
   .movie-poster {
-    width: calc((100% / 2) - 10px);
+    width: 60%;
   }
   .movie-detail-container {
     flex-direction: column;
@@ -34,24 +34,24 @@
 
 @media screen and (min-width: 481px) and (max-width: 768px) {
   .movie-poster {
-    width: calc((100% / 4) - 10px);
+    width: calc(100% / 4);
   }
 }
 
 @media screen and (min-width: 769px) and (max-width: 1024px) {
   .movie-poster {
-    width: calc((100% / 5) - 10px);
+    width: calc(100% / 5);
   }
 }
 
 @media screen and (min-width: 1025px) and (max-width: 1200px) {
   .movie-poster {
-    width: calc((100% / 7) - 10px);
+    width: calc(100% / 6);
   }
 }
 
 @media screen and (min-width: 1201px) {
   .movie-poster {
-    width: calc((100% / 8) - 10px);
+    width: calc(100% / 7);
   }
 }
