@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "../styles/SearchBar.css";
+import { selectTheme } from "../redux/themeSlice";
+import { useSelector } from "react-redux";
 
 interface ToggleProps {
   searchMovie: (searchedMovie: string) => void;
@@ -26,6 +28,9 @@ const SearchBar: React.FC<ToggleProps> = (Props: ToggleProps) => {
     setSearchedMovie("");
     Props.resetSearch();
   };
+
+  const lightTheme = useSelector(selectTheme);
+
   return (
     <div className="search-input-container">
       <input
@@ -38,20 +43,22 @@ const SearchBar: React.FC<ToggleProps> = (Props: ToggleProps) => {
       />
       {}
       {searchedMovie.length > 0 && (
-        <>
-          <span
-            className="material-icons md-18"
-            onClick={() => Props.searchMovie(searchedMovie)}
-          >
-            search
-          </span>
+        <div className="buttons-container">
           <span
             className="material-icons md-18"
             onClick={() => clearSearchedMovies()}
           >
             close
           </span>
-        </>
+          <div
+            onClick={() => Props.searchMovie(searchedMovie)}
+            className={`search-button ${
+              lightTheme ? "light-button" : "dark-button"
+            }`}
+          >
+            Search
+          </div>
+        </div>
       )}
     </div>
   );
