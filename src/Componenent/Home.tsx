@@ -1,5 +1,4 @@
 import React from "react";
-import Header from "./Header";
 import MoviesList from "./MoviesList";
 import SearchBar from "./SearchBar";
 import "../styles/Home.css";
@@ -17,7 +16,6 @@ const Home: React.FC = () => {
   };
   return (
     <div>
-      <Header />
       {errorApi ? (
         <div>erreur</div>
       ) : (

@@ -5,6 +5,7 @@ import MovieDetail from "./MovieDetail";
 import { selectTheme } from "../redux/themeSlice";
 import { useSelector } from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Header from "./Header";
 
 function App() {
   const lightTheme = useSelector(selectTheme);
@@ -14,6 +15,7 @@ function App() {
       <div
         className={`app ${lightTheme ? "light-background" : "dark-background"}`}
       >
+        <Header />
         <Switch>
           <Route path="/movieDetail">
             <MovieDetail />

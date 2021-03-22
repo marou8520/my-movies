@@ -10,10 +10,16 @@
 
 .theme-button-container {
   position: absolute;
-  right: 0;
+  right: 10px;
   align-items: center;
   display: flex;
-  margin-right: 10px;
+}
+
+.back-button-container {
+  position: absolute;
+  left: 10px;
+  align-items: center;
+  display: flex;
 }
 
 .material-icons.md-18 {

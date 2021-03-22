@@ -41,7 +41,6 @@ const SearchBar: React.FC<ToggleProps> = (Props: ToggleProps) => {
         onChange={(e) => handleChange(e.target.value)}
         onKeyDown={(e) => handleKeyDown(e, searchedMovie)}
       />
-      {}
       {searchedMovie.length > 0 && (
         <div className="buttons-container">
           <span
