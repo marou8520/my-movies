@@ -1,0 +1,38 @@
+.movie-card {
+  margin: 5px;
+}
+
+.without-poster {
+  object-fit: none;
+  background-color: #dbdbdb;
+}
+
+@media screen and (max-width: 480px) {
+  .movie-card {
+    width: calc((100% / 2) - 10px);
+  }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  .movie-card {
+    width: calc((100% / 4) - 10px);
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .movie-card {
+    width: calc((100% / 5) - 10px);
+  }
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1200px) {
+  .movie-card {
+    width: calc((100% / 7) - 10px);
+  }
+}
+
+@media screen and (min-width: 1201px) {
+  .movie-card {
+    width: calc((100% / 8) - 10px);
+  }
+}

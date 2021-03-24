@@ -13,6 +13,7 @@ const Header: React.FC = () => {
 
   return (
     <div className={`header ${lightTheme ? "light-header" : "dark-header"}`}>
+      {/* Show back button if path name is equal to movieDetail */}
       {location.pathname === "/movieDetail" && (
         <div className="back-button-container">
           <span
@@ -24,6 +25,7 @@ const Header: React.FC = () => {
         </div>
       )}
       <div>Films</div>
+      {/* Header right buttons */}
       <div className="theme-button-container">
         <span
           className="material-icons md-18"

@@ -2,12 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { apiUri, apiKey } from "../Constants/ServerInfo";
+import MovieNode from "../Constants/MovieNode";
 
-interface MovieNode {
-  title: string;
-  id: number;
-  backdrop_path: string;
-  poster_path: string;
+interface MovieDetailNode extends MovieNode{
   overview: string;
   vote_average: number;
 }
@@ -25,7 +22,7 @@ export const getMovieDetail = createAsyncThunk("movie/movieDetail", async (searc
 interface MovieDetailState {
   status: "idle" | "pending" | "succeeded" | "failed";
   error: string | null;
-  movieDetail: MovieNode | null;
+  movieDetail: MovieDetailNode | null;
 }
 
 const initialState = {
@@ -65,7 +62,7 @@ export const movieDetailSlice = createSlice({
 export const { resetMovieDetail } = movieDetailSlice.actions;
 
 export const selectMovie = (state: RootState) => state.movie.movieDetail;
-export const selectstatus = (state: RootState) => state.movie.status;
+export const selectMovieDetailstatus = (state: RootState) => state.movie.status;
 export const selectMovieDetailError = (state: RootState) => state.movie.error;
 
 export default movieDetailSlice.reducer;

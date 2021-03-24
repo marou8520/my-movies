@@ -2,13 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { apiUri, apiKey } from "../Constants/ServerInfo";
-
-interface MovieNode {
-  title: string;
-  id: number;
-  backdrop_path: string;
-  poster_path: string;
-}
+import MovieNode from "../Constants/MovieNode";
 
 export const searchMovie = createAsyncThunk("movies/searchMovie", async (searchedValue: string) => {
   const response = await fetch(

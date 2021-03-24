@@ -6,19 +6,28 @@ import {
   selectstatus,
   selectSearchedMovies,
 } from "../redux/moviesSlice";
-import { Tooltip, Typography } from "@material-ui/core";
-import { withStyles, Theme } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-import without_poster from "../assets/without_poster.png";
-import { imageServerUri } from "../Constants/ServerInfo";
+import Card from "./Widgets/Card";
 import "../styles/MoviesList.css";
+import MovieNode from "../Constants/MovieNode";
 
-interface MovieNode {
-  title: string;
-  id: number;
-  backdrop_path: string;
-  poster_path: string;
-}
+const displayMovies = (
+  movies: MovieNode[],
+  showMovieDetailCallBack: (movieId: number) => void
+) => {
+  return (
+    movies.length > 0 &&
+    movies.map((movie: MovieNode) => {
+      return (
+        <Card
+          key={movie.id}
+          movie={movie}
+          showMovieDetailCallBack={showMovieDetailCallBack}
+        />
+      );
+    })
+  );
+};
 
 const MoviesList: React.FC = () => {
   const dispatch = useDispatch();
@@ -27,65 +36,25 @@ const MoviesList: React.FC = () => {
   const movies = useSelector(selectMovies);
   const postStatus = useSelector(selectstatus);
 
+  const showMovieDetailCallBack = (movieId: number) => {
+    history.push({
+      pathname: "/movieDetail",
+      state: { movieId: movieId },
+    });
+  };
+
+  // Calling get popular movies from api when the componenet did the mount
   useEffect(() => {
     if (postStatus === "idle") {
       dispatch(fetchMovies());
     }
   }, [postStatus, dispatch]);
 
-  const HtmlTooltip = withStyles((theme: Theme) => ({
-    tooltip: {
-      backgroundColor: "#f5f5f9",
-      color: "rgba(0, 0, 0, 0.87)",
-      maxWidth: 220,
-      fontSize: theme.typography.pxToRem(12),
-      border: "1px solid #dadde9",
-    },
-  }))(Tooltip);
-
-  const displayMovies = (movies: MovieNode[]) => {
-    return (
-      movies.length > 0 &&
-      movies.map((movie: MovieNode) => {
-        return (
-          <HtmlTooltip
-            title={<Typography color="inherit">{movie.title}</Typography>}
-            key={movie.id}
-            className="movie-card"
-          >
-            {movie.poster_path ? (
-              <img
-                className="movie-card-poster"
-                src={imageServerUri + movie.poster_path}
-                alt=""
-                onClick={(e) => {
-                  history.push({
-                    pathname: "/movieDetail",
-                    state: { movieId: movie.id },
-                  });
-                }}
-              />
-            ) : (
-              <img
-                className="movie-card-poster without-poster"
-                src={without_poster}
-                alt=""
-                onClick={(e) => {
-                  history.push({
-                    pathname: "/movieDetail",
-                    state: { movieId: movie.id },
-                  });
-                }}
-              />
-            )}
-          </HtmlTooltip>
-        );
-      })
-    );
-  };
   return (
     <div className="movies-card-list">
-      {!!searchedMovies ? displayMovies(searchedMovies) : displayMovies(movies)}
+      {!!searchedMovies
+        ? displayMovies(searchedMovies, showMovieDetailCallBack)
+        : displayMovies(movies, showMovieDetailCallBack)}
     </div>
   );
 };

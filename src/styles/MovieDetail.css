@@ -22,6 +22,11 @@
   margin: 20px 0px;
 }
 
+.movie-without-poster {
+  object-fit: none;
+  background-color: #dbdbdb;
+}
+
 @media screen and (max-width: 480px) {
   .movie-poster {
     width: 60%;

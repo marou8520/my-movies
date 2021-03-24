@@ -1,7 +1,7 @@
 import React from "react";
-import "../styles/ErrorPanel.css";
+import "../../styles/widgets/ErrorPanel.css";
 
-const SearchBar: React.FC = () => {
+const SearchBar = () => {
   return (
     <div className="api-error">
       UNE ERREUR EST SURVENUE. VEUILLEZ RECHARGER LA PAGE ET RÉESSAYER
