@@ -5,17 +5,17 @@ import {
   selectstatus,
   selectMovie,
   resetMovieDetail,
+  selectMovieDetailError,
 } from "../redux/movieDetailSlice";
 import { selectTheme } from "../redux/themeSlice";
-
 import { useLocation } from "react-router-dom";
+import { imageServerUri } from "../Constants/ServerInfo";
 import "../styles/MovieDetail.css";
+import ErrorPanel from "./ErrorPanel";
 
 interface LocationState {
   movieId: number;
 }
-
-const serverUri = "http://image.tmdb.org/t/p/original//";
 
 const MovieDetail: React.FC = () => {
   const dispatch = useDispatch();
@@ -23,6 +23,7 @@ const MovieDetail: React.FC = () => {
   const movie = useSelector(selectMovie);
   const postStatus = useSelector(selectstatus);
   const lightTheme = useSelector(selectTheme);
+  const movieDetailErrorApi = useSelector(selectMovieDetailError);
 
   const { movieId } = location.state;
   useEffect(() => {
@@ -37,28 +38,32 @@ const MovieDetail: React.FC = () => {
     }
   }, [postStatus, dispatch, movieId]);
 
-  if (movie) {
-    return (
-      <div
-        className={`movie-detail-container ${
-          lightTheme ? "" : "dark-theme-text"
-        }`}
-      >
-        <div className="movie-info-container">
-          <div className="movie-title">{movie.title}</div>
-          <div>{movie.overview}</div>
-          <div className="movie-score">{movie.vote_average}/10</div>
-        </div>
-        <img
-          className="movie-poster"
-          src={serverUri + movie.poster_path}
-          alt=""
-        />
-      </div>
-    );
-  } else {
-    return null;
-  }
+  return (
+    <div
+      className={`movie-detail-container ${
+        lightTheme ? "" : "dark-theme-text"
+      }`}
+    >
+      {movieDetailErrorApi ? (
+        <ErrorPanel />
+      ) : (
+        movie && (
+          <>
+            <div className="movie-info-container">
+              <div className="movie-title">{movie.title}</div>
+              <div>{movie.overview}</div>
+              <div className="movie-score">{movie.vote_average}/10</div>
+            </div>
+            <img
+              className="movie-poster"
+              src={imageServerUri + movie.poster_path}
+              alt=""
+            />
+          </>
+        )
+      )}
+    </div>
+  );
 };
 
 export default MovieDetail;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "../styles/SearchBar.css";
 import { selectTheme } from "../redux/themeSlice";
 import { useSelector } from "react-redux";
+import "../styles/SearchBar.css";
 
 interface ToggleProps {
   searchMovie: (searchedMovie: string) => void;
@@ -10,6 +10,7 @@ interface ToggleProps {
 
 const SearchBar: React.FC<ToggleProps> = (Props: ToggleProps) => {
   const [searchedMovie, setSearchedMovie] = useState<string>("");
+  const lightTheme = useSelector(selectTheme);
 
   const handleKeyDown = (event: React.KeyboardEvent, searchedMovie: string) => {
     if (event.key === "Enter" && searchedMovie) {
@@ -28,8 +29,6 @@ const SearchBar: React.FC<ToggleProps> = (Props: ToggleProps) => {
     setSearchedMovie("");
     Props.resetSearch();
   };
-
-  const lightTheme = useSelector(selectTheme);
 
   return (
     <div className="search-input-container">

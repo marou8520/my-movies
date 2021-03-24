@@ -6,12 +6,12 @@ import {
   selectstatus,
   selectSearchedMovies,
 } from "../redux/moviesSlice";
-import "../styles/MoviesList.css";
-import Typography from "@material-ui/core/Typography";
-import Tooltip from "@material-ui/core/Tooltip";
+import { Tooltip, Typography } from "@material-ui/core";
 import { withStyles, Theme } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 import without_poster from "../assets/without_poster.png";
+import { imageServerUri } from "../Constants/ServerInfo";
+import "../styles/MoviesList.css";
 
 interface MovieNode {
   title: string;
@@ -20,14 +20,11 @@ interface MovieNode {
   poster_path: string;
 }
 
-const serverUri = "http://image.tmdb.org/t/p/original//";
 const MoviesList: React.FC = () => {
   const dispatch = useDispatch();
   let history = useHistory();
-
   const searchedMovies = useSelector(selectSearchedMovies);
   const movies = useSelector(selectMovies);
-
   const postStatus = useSelector(selectstatus);
 
   useEffect(() => {
@@ -59,7 +56,7 @@ const MoviesList: React.FC = () => {
             {movie.poster_path ? (
               <img
                 className="movie-card-poster"
-                src={serverUri + movie.poster_path}
+                src={imageServerUri + movie.poster_path}
                 alt=""
                 onClick={(e) => {
                   history.push({

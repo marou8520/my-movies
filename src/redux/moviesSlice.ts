@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { apiUri, apiKey } from "../Constants/ServerInfo";
 
 interface MovieNode {
   title: string;
@@ -11,15 +12,21 @@ interface MovieNode {
 
 export const searchMovie = createAsyncThunk("movies/searchMovie", async (searchedValue: string) => {
   const response = await fetch(
-    `https://api.themoviedb.org/3/search/movie?api_key=b733f9f3727f7a148f45111ceb4cff9a&language=en-US&page=1&include_adult=false&query=${searchedValue}`
+    `${apiUri}search/movie?api_key=${apiKey}&language=en-US&page=1&include_adult=false&query=${searchedValue}`
   );
+  if(!response.ok) {
+    return Promise.reject();
+  }
   return await response.json();
 });
 
 export const fetchMovies = createAsyncThunk("movies/fetchMovies", async () => {
   const response = await fetch(
-    `https://api.themoviedb.org/3/movie/popular?api_key=b733f9f3727f7a148f45111ceb4cff9a&language=en-US&page=1`
+    `${apiUri}movie/popular?api_key=${apiKey}&language=en-US&page=1`
   );
+  if(!response.ok) {
+    return Promise.reject();
+  }
   return await response.json();
 });
 
@@ -72,6 +79,7 @@ export const moviesSlice = createSlice({
     });
 
     builder.addCase(searchMovie.rejected, (state, { error }) => {
+
       if (error && error.message) state.error = error.message;
       state.status = "failed";
     });

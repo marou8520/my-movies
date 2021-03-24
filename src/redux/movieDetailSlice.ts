@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { apiUri, apiKey } from "../Constants/ServerInfo";
 
 interface MovieNode {
   title: string;
@@ -13,8 +14,11 @@ interface MovieNode {
 
 export const getMovieDetail = createAsyncThunk("movie/movieDetail", async (searchedValue: number) => {
   const response = await fetch(
-    `https://api.themoviedb.org/3/movie/${searchedValue}?api_key=b733f9f3727f7a148f45111ceb4cff9a&language=en-US`
+    `${apiUri}movie/${searchedValue}?api_key=${apiKey}&language=en-US`
   );
+  if(!response.ok) {
+    return Promise.reject();
+  }
   return await response.json();
 });
 
@@ -62,6 +66,6 @@ export const { resetMovieDetail } = movieDetailSlice.actions;
 
 export const selectMovie = (state: RootState) => state.movie.movieDetail;
 export const selectstatus = (state: RootState) => state.movie.status;
-export const selectError = (state: RootState) => state.movie.error;
+export const selectMovieDetailError = (state: RootState) => state.movie.error;
 
 export default movieDetailSlice.reducer;

@@ -1,9 +1,10 @@
 import React from "react";
 import MoviesList from "./MoviesList";
 import SearchBar from "./SearchBar";
-import "../styles/Home.css";
+import ErrorPanel from "./ErrorPanel";
 import { useSelector, useDispatch } from "react-redux";
 import { selectError, searchMovie, resetSearch } from "../redux/moviesSlice";
+import "../styles/Home.css";
 
 const Home: React.FC = () => {
   const errorApi = useSelector(selectError);
@@ -17,7 +18,7 @@ const Home: React.FC = () => {
   return (
     <div>
       {errorApi ? (
-        <div>erreur</div>
+        <ErrorPanel />
       ) : (
         <div className="container">
           <SearchBar

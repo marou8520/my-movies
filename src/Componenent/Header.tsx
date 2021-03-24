@@ -1,15 +1,15 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { changeTheme, selectTheme } from "../redux/themeSlice";
-import "../styles/Header.css";
 import Switch from "@material-ui/core/Switch";
 import { useHistory, useLocation } from "react-router-dom";
+import "../styles/Header.css";
 
 const Header: React.FC = () => {
-  const lightTheme = useSelector(selectTheme);
   const dispatch = useDispatch();
   let history = useHistory();
   let location = useLocation();
+  const lightTheme = useSelector(selectTheme);
 
   return (
     <div className={`header ${lightTheme ? "light-header" : "dark-header"}`}>
