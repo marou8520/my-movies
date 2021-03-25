@@ -3,7 +3,6 @@ import Home from "./Home";
 import MovieDetail from "./MovieDetail";
 import Header from "./Header";
 import { selectTheme } from "../redux/themeSlice";
-import { selectMovieDetailstatus } from "../redux/movieDetailSlice";
 import { selectstatus } from "../redux/moviesSlice";
 import { useSelector } from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -27,15 +26,12 @@ const AppContainer = styled.div<AppContainerProps>`
 function App() {
   const lightTheme = useSelector(selectTheme);
   const status = useSelector(selectstatus);
-  const movieDetailStatus = useSelector(selectMovieDetailstatus);
 
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <AppContainer lightTheme={lightTheme} className="app">
-          {(status === "pending" || movieDetailStatus === "pending") && (
-            <CircularProgress className="loader" />
-          )}
+          {status === "pending" && <CircularProgress className="loader" />}
           <Header />
           <Switch>
             <Route path="/movieDetail">

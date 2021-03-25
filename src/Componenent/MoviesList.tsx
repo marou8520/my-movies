@@ -5,6 +5,7 @@ import {
   selectMovies,
   selectstatus,
   selectSearchedMovies,
+  resetState,
 } from "../redux/moviesSlice";
 import { useHistory } from "react-router-dom";
 import Card from "./Widgets/Card";
@@ -42,6 +43,13 @@ const MoviesList: React.FC = () => {
       state: { movieId: movieId },
     });
   };
+
+  // Reset status
+  useEffect(() => {
+    return () => {
+      dispatch(resetState());
+    };
+  }, [dispatch]);
 
   // Calling get popular movies from api when the componenet did the mount
   useEffect(() => {

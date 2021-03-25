@@ -5,6 +5,7 @@ import Switch from "@material-ui/core/Switch";
 import { useHistory, useLocation } from "react-router-dom";
 import "../styles/Header.css";
 import styled from "styled-components";
+import strings from "../Constants/Strings";
 
 interface HeaderContainerProps {
   readonly lightTheme: boolean;
@@ -36,7 +37,8 @@ const Header: React.FC = () => {
           </span>
         </div>
       )}
-      <div>Films</div>
+      <div>{strings.headerTitle}</div>
+
       {/* Header right buttons */}
       <div className="theme-button-container">
         <span

@@ -2,11 +2,10 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getMovieDetail,
-  selectMovieDetailstatus,
+  selectstatus,
   selectMovie,
-  resetMovieDetail,
-  selectMovieDetailError,
-} from "../redux/movieDetailSlice";
+  resetState,
+} from "../redux/moviesSlice";
 import { selectTheme } from "../redux/themeSlice";
 import { useLocation } from "react-router-dom";
 import { imageServerUri } from "../Constants/ServerInfo";
@@ -14,6 +13,7 @@ import ErrorPanel from "./Widgets/ErrorPanel";
 import without_poster from "../assets/without_poster.png";
 import "../styles/MovieDetail.css";
 import styled from "styled-components";
+import strings from "../Constants/Strings";
 
 interface MovieDetailsProps {
   readonly lightTheme: boolean;
@@ -43,15 +43,14 @@ const MovieDetail: React.FC = () => {
   const dispatch = useDispatch();
   const location = useLocation<LocationState>();
   const movie = useSelector(selectMovie);
-  const postStatus = useSelector(selectMovieDetailstatus);
+  const postStatus = useSelector(selectstatus);
   const lightTheme = useSelector(selectTheme);
-  const movieDetailErrorApi = useSelector(selectMovieDetailError);
   const { movieId } = location.state;
 
   // Reset movie detail when component will unmount
   useEffect(() => {
     return () => {
-      dispatch(resetMovieDetail());
+      dispatch(resetState());
     };
   }, [dispatch]);
 
@@ -67,7 +66,7 @@ const MovieDetail: React.FC = () => {
       lightTheme={lightTheme}
       className="movie-detail-container"
     >
-      {movieDetailErrorApi ? (
+      {postStatus === "failed" ? (
         <ErrorPanel />
       ) : (
         movie && (
@@ -77,12 +76,12 @@ const MovieDetail: React.FC = () => {
               <p>
                 {movie.overview
                   ? movie.overview
-                  : "Ce film ne contient pas encore de description !"}
+                  : strings.movieWithoutOverviewMessage}
               </p>
               <h4 className="movie-score">
                 {!!movie.vote_count
-                  ? movie.vote_average + "/10"
-                  : "Ce film n'est pas encore noté !"}
+                  ? movie.vote_average + strings.movieMaxScore
+                  : strings.movieWithoutScoreMessage}
               </h4>
             </div>
             <MoviePoster
