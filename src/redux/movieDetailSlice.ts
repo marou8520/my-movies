@@ -7,6 +7,7 @@ import MovieNode from "../Constants/MovieNode";
 interface MovieDetailNode extends MovieNode{
   overview: string;
   vote_average: number;
+  vote_count: number;
 }
 
 export const getMovieDetail = createAsyncThunk("movie/movieDetail", async (searchedValue: number) => {
@@ -50,6 +51,7 @@ export const movieDetailSlice = createSlice({
     builder.addCase(getMovieDetail.fulfilled, (state, { payload }) => {
       state.movieDetail = payload;
       state.status = "succeeded";
+      state.error = null;
     });
 
     builder.addCase(getMovieDetail.rejected, (state, { error }) => {

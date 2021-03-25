@@ -5,11 +5,21 @@ import { imageServerUri } from "../../Constants/ServerInfo";
 import without_poster from "../../assets/without_poster.png";
 import MovieNode from "../../Constants/MovieNode";
 import "../../styles/widgets/Card.css";
+import styled from "styled-components";
 
 interface ToggleProps {
   movie: MovieNode;
   showMovieDetailCallBack: (movieId: number) => void;
 }
+
+interface MovieCardProps {
+  readonly poster_path: string | null;
+}
+
+const MovieCard = styled.img<MovieCardProps>`
+  object-fit: ${(props) => (!props.poster_path ? "none" : "")};
+  background-color: ${(props) => (!props.poster_path ? "#dbdbdb" : "")};
+`;
 
 const HtmlTooltip = withStyles((theme: Theme) => ({
   tooltip: {
@@ -28,8 +38,8 @@ const showMoviePoster = (
   showMovieDetailCallBack: (movieId: number) => void
 ) => {
   return (
-    <img
-      className={!poster_path ? "without-poster" : ""}
+    <MovieCard
+      poster_path={poster_path}
       src={poster_path ? imageServerUri + poster_path : without_poster}
       alt=""
       onClick={() => showMovieDetailCallBack(movieId)}

@@ -13,10 +13,31 @@ import { imageServerUri } from "../Constants/ServerInfo";
 import ErrorPanel from "./Widgets/ErrorPanel";
 import without_poster from "../assets/without_poster.png";
 import "../styles/MovieDetail.css";
+import styled from "styled-components";
+
+interface MovieDetailsProps {
+  readonly lightTheme: boolean;
+}
+
+interface MoviePosterProps {
+  readonly poster_path: string | null;
+}
 
 interface LocationState {
   movieId: number;
 }
+
+const MovieDetailsContainer = styled.div<MovieDetailsProps>`
+  color: ${(props) =>
+    props.lightTheme
+      ? props.theme.textColors.light
+      : props.theme.textColors.dark};
+`;
+
+const MoviePoster = styled.img<MoviePosterProps>`
+  object-fit: ${(props) => (!props.poster_path ? "none" : "")};
+  background-color: ${(props) => (!props.poster_path ? "#dbdbdb" : "")};
+`;
 
 const MovieDetail: React.FC = () => {
   const dispatch = useDispatch();
@@ -25,7 +46,6 @@ const MovieDetail: React.FC = () => {
   const postStatus = useSelector(selectMovieDetailstatus);
   const lightTheme = useSelector(selectTheme);
   const movieDetailErrorApi = useSelector(selectMovieDetailError);
-
   const { movieId } = location.state;
 
   // Reset movie detail when component will unmount
@@ -43,10 +63,9 @@ const MovieDetail: React.FC = () => {
   }, [postStatus, dispatch, movieId]);
 
   return (
-    <div
-      className={`movie-detail-container ${
-        lightTheme ? "" : "dark-theme-text"
-      }`}
+    <MovieDetailsContainer
+      lightTheme={lightTheme}
+      className="movie-detail-container"
     >
       {movieDetailErrorApi ? (
         <ErrorPanel />
@@ -54,19 +73,21 @@ const MovieDetail: React.FC = () => {
         movie && (
           <>
             <div className="movie-info-container">
-              <div className="movie-title">{movie.title}</div>
-              <div>
+              <h2 className="movie-title">{movie.title}</h2>
+              <p>
                 {movie.overview
                   ? movie.overview
-                  : "Sorry, there is no overview for this film !"}
-              </div>
-              <div className="movie-score">{movie.vote_average}/10</div>
+                  : "Ce film ne contient pas encore de description !"}
+              </p>
+              <h4 className="movie-score">
+                {!!movie.vote_count
+                  ? movie.vote_average + "/10"
+                  : "Ce film n'est pas encore noté !"}
+              </h4>
             </div>
-            <img
-              className={
-                "movie-poster" +
-                (!movie.poster_path ? " movie-without-poster" : "")
-              }
+            <MoviePoster
+              className="movie-poster"
+              poster_path={movie.poster_path}
               src={
                 movie.poster_path
                   ? imageServerUri + movie.poster_path
@@ -77,7 +98,7 @@ const MovieDetail: React.FC = () => {
           </>
         )
       )}
-    </div>
+    </MovieDetailsContainer>
   );
 };
 

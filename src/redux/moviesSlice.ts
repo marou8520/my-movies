@@ -55,6 +55,7 @@ export const moviesSlice = createSlice({
     builder.addCase(fetchMovies.fulfilled, (state, { payload }) => {
       state.moviesList = payload.results;
       state.status = "succeeded";
+      state.error = null;
     });
 
     builder.addCase(fetchMovies.rejected, (state, { error }) => {
@@ -70,6 +71,7 @@ export const moviesSlice = createSlice({
     builder.addCase(searchMovie.fulfilled, (state, { payload }) => {
       state.searchedMovies = payload.results;
       state.status = "succeeded";
+      state.error = null;
     });
 
     builder.addCase(searchMovie.rejected, (state, { error }) => {

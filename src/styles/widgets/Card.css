@@ -2,11 +2,6 @@
   margin: 5px;
 }
 
-.without-poster {
-  object-fit: none;
-  background-color: #dbdbdb;
-}
-
 @media screen and (max-width: 480px) {
   .movie-card {
     width: calc((100% / 2) - 10px);

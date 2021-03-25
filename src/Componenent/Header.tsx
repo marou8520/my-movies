@@ -4,6 +4,18 @@ import { changeTheme, selectTheme } from "../redux/themeSlice";
 import Switch from "@material-ui/core/Switch";
 import { useHistory, useLocation } from "react-router-dom";
 import "../styles/Header.css";
+import styled from "styled-components";
+
+interface HeaderContainerProps {
+  readonly lightTheme: boolean;
+}
+
+const HeaderContainer = styled.div<HeaderContainerProps>`
+  background-color: ${(props) =>
+    props.lightTheme
+      ? props.theme.headerColors.light
+      : props.theme.headerColors.dark};
+`;
 
 const Header: React.FC = () => {
   const dispatch = useDispatch();
@@ -12,7 +24,7 @@ const Header: React.FC = () => {
   const lightTheme = useSelector(selectTheme);
 
   return (
-    <div className={`header ${lightTheme ? "light-header" : "dark-header"}`}>
+    <HeaderContainer className="header" lightTheme={lightTheme}>
       {/* Show back button if path name is equal to movieDetail */}
       {location.pathname === "/movieDetail" && (
         <div className="back-button-container">
@@ -47,7 +59,7 @@ const Header: React.FC = () => {
           light_mode
         </span>
       </div>
-    </div>
+    </HeaderContainer>
   );
 };
 

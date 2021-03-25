@@ -2,6 +2,18 @@ import React, { useState } from "react";
 import { selectTheme } from "../redux/themeSlice";
 import { useSelector } from "react-redux";
 import "../styles/SearchBar.css";
+import styled from "styled-components";
+
+interface SearchButtonProps {
+  readonly lightTheme: boolean;
+}
+
+const SearchButton = styled.div<SearchButtonProps>`
+  background-color: ${(props) =>
+    props.lightTheme
+      ? props.theme.headerColors.light
+      : props.theme.headerColors.dark};
+`;
 
 interface ToggleProps {
   searchMovie: (searchedMovie: string) => void;
@@ -48,14 +60,13 @@ const SearchBar: React.FC<ToggleProps> = (Props: ToggleProps) => {
           >
             close
           </span>
-          <div
+          <SearchButton
+            lightTheme={lightTheme}
             onClick={() => Props.searchMovie(searchedMovie)}
-            className={`search-button ${
-              lightTheme ? "light-button" : "dark-button"
-            }`}
+            className="search-button"
           >
             Search
-          </div>
+          </SearchButton>
         </div>
       )}
     </div>
